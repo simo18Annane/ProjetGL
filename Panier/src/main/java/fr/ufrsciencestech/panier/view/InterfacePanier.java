@@ -45,8 +45,10 @@ public class InterfacePanier extends javax.swing.JFrame {
         jButton1.setIcon(imageIcon);
         //pour remplir la liste des paniers
         listModel = new DefaultListModel<>();
-        jListPays.setModel(listModel);
+        jListPanier.setModel(listModel);
         
+        jButtonModifier.setEnabled(false);
+        jButtonSupprimer.setEnabled(false);
 
     }
     
@@ -74,6 +76,12 @@ public class InterfacePanier extends javax.swing.JFrame {
         this.boutonCreerPanierListener = listener;
     }
 
+    //pour recuperer le panier selectionner
+    public String getPanier(){
+        return jListPanier.getSelectedValue();
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,7 +101,7 @@ public class InterfacePanier extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jListPays = new javax.swing.JList<>();
+        jListPanier = new javax.swing.JList<>();
         jPanelSupprimer = new javax.swing.JPanel();
         jButtonSupprimer = new javax.swing.JButton();
         jPanelDroite = new javax.swing.JPanel();
@@ -144,7 +152,12 @@ public class InterfacePanier extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane2.setViewportView(jListPays);
+        jListPanier.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListPanierValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jListPanier);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -224,7 +237,7 @@ public class InterfacePanier extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabelNomPanier.setText("Panier1");
+        jLabelNomPanier.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jLabelType.setText("Type : ");
 
@@ -395,6 +408,13 @@ public class InterfacePanier extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemCreerFruitActionPerformed
 
+    private void jListPanierValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListPanierValueChanged
+        // TODO add your handling code here:
+        jLabelNomPanier.setText(jListPanier.getSelectedValue());
+        jButtonModifier.setEnabled(true);
+        jButtonSupprimer.setEnabled(true);
+    }//GEN-LAST:event_jListPanierValueChanged
+
     /**
      * @param args the command line arguments
      */
@@ -446,7 +466,7 @@ public class InterfacePanier extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNomPanier;
     private javax.swing.JLabel jLabelType;
     private javax.swing.JList<String> jList3;
-    private javax.swing.JList<String> jListPays;
+    private javax.swing.JList<String> jListPanier;
     private javax.swing.JMenu jMenuAjouter;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenuItem jMenuItemCreerFruit;

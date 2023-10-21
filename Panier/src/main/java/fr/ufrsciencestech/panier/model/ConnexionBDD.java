@@ -41,23 +41,47 @@ public class ConnexionBDD {
         }
     }
     
-    //insertion d'un nouveau fruit dans la table fruit du BDD (Création d'un fruit)
-    public void insertFruit(String nom, double prix, String origine){
-       String requete = "INSERT INTO fruit (name, price, origin) VALUES (?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)) {
+    //verifier si un fruit existe deja dans la bdd
+    public boolean verifFruit(String nom, double prix, String origine){
+        String requete = "SELECT COUNT(*) FROM fruit WHERE name = ? AND price = ? AND origin = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setString(1, nom);
             preparedStatement.setDouble(2, prix);
             preparedStatement.setString(3, origine);
             
-            int rows = preparedStatement.executeUpdate();
-            if(rows > 0){
-                System.out.println("Données insérées avec succés.");
-            } else {
-                System.out.println("Aucune donnée insérée");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                int count = resultSet.getInt(1);
+                return count > 0;
             }
-            
         } catch (SQLException e){
-            System.err.println("Erreur lors de l'insertion de données à la BDD: " + e.getMessage());
+            System.out.println("Erreur lors de la vérification de l'existence du fruit dans la bdd: "+ e.getMessage());
+        }
+        return false;
+    }
+    
+    //insertion d'un nouveau fruit dans la table fruit du BDD (Création d'un fruit)
+    public boolean insertFruit(String nom, double prix, String origine){
+        if(!verifFruit(nom, prix, origine)){
+            String requete = "INSERT INTO fruit (name, price, origin) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(requete)) {
+                preparedStatement.setString(1, nom);
+                preparedStatement.setDouble(2, prix);
+                preparedStatement.setString(3, origine);
+
+                int rows = preparedStatement.executeUpdate();
+                if(rows > 0){
+                    System.out.println("Données insérées avec succés.");
+                } else {
+                    System.out.println("Aucune donnée insérée");
+                }
+
+            } catch (SQLException e){
+                System.err.println("Erreur lors de l'insertion de données à la BDD: " + e.getMessage());
+            }
+            return true;
+        } else {
+            return false;
         }
     }
     
@@ -99,16 +123,18 @@ public class ConnexionBDD {
         try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
                 ResultSet resultSet = preparedStatement.executeQuery()){
             int rowCount = nombreLigne("fruit");
-            Object[][] fruits = new Object[rowCount][3];
+            Object[][] fruits = new Object[rowCount][4];
             int index = 0;
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String nom = resultSet.getString("name");
                 double prix = resultSet.getDouble("price");
                 String origine = resultSet.getString("origin");
                 
-                fruits[index][0] = nom;
-                fruits[index][1] = prix;
-                fruits[index][2] = origine;
+                fruits[index][0] = id;
+                fruits[index][1] = nom;
+                fruits[index][2] = prix;
+                fruits[index][3] = origine;
                 index++;
             }
             return fruits;
@@ -119,27 +145,47 @@ public class ConnexionBDD {
         return new Object[0][0];
     }
     
-    
+    //verifier si un panier existe deja dans la bdd
+    public boolean verifPanier(String nom){
+        String requete = "SELECT COUNT(*) FROM panier WHERE name = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            preparedStatement.setString(1, nom);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e){
+            System.out.println("Erreur lors de la vérification de l'existence du panier dans la bdd: " + e.getMessage());
+        }
+        return false;
+    }
     
     //creation d'un nouveau panier
-    public void insertPanier(String nom, String type, int capacité, double value){
-       String requete = "INSERT INTO panier (name, type, maxcapacity, value) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)) {
-            preparedStatement.setString(1, nom);
-            preparedStatement.setString(4, type);
-            preparedStatement.setInt(2, capacité);
-            preparedStatement.setDouble(3, value);
-            
-            
-            int rows = preparedStatement.executeUpdate();
-            if(rows > 0){
-                System.out.println("Données insérées avec succés.");
-            } else {
-                System.out.println("Aucune donnée insérée");
+    public boolean insertPanier(String nom, String type, int capacité, double value){
+        if(!verifPanier(nom)){
+            String requete = "INSERT INTO panier (name, type, maxcapacity, value) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(requete)) {
+                preparedStatement.setString(1, nom);
+                preparedStatement.setString(4, type);
+                preparedStatement.setInt(2, capacité);
+                preparedStatement.setDouble(3, value);
+
+
+                int rows = preparedStatement.executeUpdate();
+                if(rows > 0){
+                    System.out.println("Données insérées avec succés.");
+                } else {
+                    System.out.println("Aucune donnée insérée");
+                }
+
+            } catch (SQLException e){
+                System.err.println("Erreur lors de l'insertion de données à la BDD: " + e.getMessage());
             }
-            
-        } catch (SQLException e){
-            System.err.println("Erreur lors de l'insertion de données à la BDD: " + e.getMessage());
+            return true;
+        } else {
+            return false;
         }
     }
     
@@ -179,16 +225,18 @@ public class ConnexionBDD {
         
         try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
             ResultSet resultSet = preparedStatement.executeQuery()){
-            Object [][] fruits = new Object[rowCount][3];
+            Object [][] fruits = new Object[rowCount][4];
             int index = 0;
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String nom = resultSet.getString("name");
                 double prix = resultSet.getDouble("price");
                 String origine = resultSet.getString("origin");
                 
-                fruits[index][0] = nom;
-                fruits[index][1] = prix;
-                fruits[index][2] = origine;
+                fruits[index][0] = id;
+                fruits[index][1] = nom;
+                fruits[index][2] = prix;
+                fruits[index][3] = origine;
                 index++;
             }
             return fruits;

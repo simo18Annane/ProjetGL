@@ -1,17 +1,20 @@
 package fr.ufrsciencestech.panier.model;
 
 public class Kiwi implements Fruit{
+    private int id;
     private double prix;
     private String origine;
 
     public Kiwi()
     {
+        this.id = 0;
         this.prix = 0.0;  //prix en euros
         this.origine= "";
     }
 
-    public Kiwi(double prix, String origine)
+    public Kiwi(int id, double prix, String origine)
     {
+        this.id = id;
         this.prix = prix;
         this.origine = origine;
     }
@@ -37,6 +40,14 @@ public class Kiwi implements Fruit{
         else
             this.origine=origine;
     }
+    
+    public int getId(){
+        return this.id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
+    }
 
     @Override
     public String getNom() {
@@ -45,7 +56,7 @@ public class Kiwi implements Fruit{
 
     @Override
     public String toString(){
-        return "Kiwi de " + origine + " à " + prix + " €/kg";
+        return id + "- Kiwi de " + origine + " à " + prix + " €/kg";
     }
 
     @Override

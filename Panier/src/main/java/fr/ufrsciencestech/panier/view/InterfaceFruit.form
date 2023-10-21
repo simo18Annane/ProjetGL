@@ -434,7 +434,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabelNomPanier">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Panier1"/>
+                <Property name="horizontalAlignment" type="int" value="0"/>
               </Properties>
             </Component>
           </SubComponents>

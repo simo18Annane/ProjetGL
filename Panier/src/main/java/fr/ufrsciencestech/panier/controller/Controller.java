@@ -123,10 +123,17 @@ public class Controller {
                     
                 }
                 
-                cnxdb.insertFruit(name, price, origin);
+                if(cnxdb.insertFruit(name, price, origin)){
+                    fr.ecraserLF();
+                    remplirLF();
+                    cf.retourResultat("Fruit ajouté avec succés");
+                    cf.reinit();
+                }else {
+                    cf.retourResultat("Le fruit existe deja");
+                }
+               
+                
                 cnxdb.closeConnection();
-                fr.ecraserLF();
-                remplirLF();
             }
         });
         
@@ -136,10 +143,16 @@ public class Controller {
             public void actionPerformed(ActionEvent e){
                 cnxdb = new ConnexionBDD();
                 panier = new Panier(cp.getNom(), cp.gettype(), cp.getCapacite());
-                cnxdb.insertPanier(panier.getName(), panier.getType(), panier.getContenanceMax(), panier.getPrixtotale());
+                if(cnxdb.insertPanier(panier.getName(), panier.getType(), panier.getContenanceMax(), panier.getPrixtotale())){
+                    ip.ecraserLP();
+                    remplirLP(); 
+                    cp.reinit();
+                    cp.dispose();
+                }else {
+                    cp.retourResultat("ce panier existe deja");
+                }
                 cnxdb.closeConnection();
-                ip.ecraserLP();
-                remplirLP();
+                
             }
         });
         
@@ -149,6 +162,7 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e){
                 fr.setVisible(true);
+                fr.receivePanier(ip.getPanier());
             }
         });
         
@@ -218,24 +232,24 @@ public class Controller {
     public List<Fruit> tabToList(Object[][] tab){
         List<Fruit> lst = new ArrayList<> ();
         for(int i=0; i < tab.length; i++){
-            switch ((String) tab[i][0]){
+            switch ((String) tab[i][1]){
                 case "Banane":{
-                    lst.add(new Banane((Double) tab[i][1], (String) tab[i][2]));
+                    lst.add(new Banane((int)tab[i][0], (Double) tab[i][2], (String) tab[i][3]));
                 } break;
                 case "Fraise":{
-                    lst.add(new Fraise((Double) tab[i][1], (String) tab[i][2]));
+                    lst.add(new Fraise((int)tab[i][0], (Double) tab[i][2], (String) tab[i][3]));
                 } break;
                 case "Kiwi":{
-                    lst.add(new Kiwi((Double) tab[i][1], (String) tab[i][2]));
+                    lst.add(new Kiwi((int)tab[i][0], (Double) tab[i][2], (String) tab[i][3]));
                 } break;
                 case "Orange":{
-                    lst.add(new Orange((Double) tab[i][1], (String) tab[i][2]));
+                    lst.add(new Orange((int)tab[i][0], (Double) tab[i][2], (String) tab[i][3]));
                 } break;
                 case "Papaye":{
-                    lst.add(new Papaye((Double) tab[i][1], (String) tab[i][2]));
+                    lst.add(new Papaye((int)tab[i][0], (Double) tab[i][2], (String) tab[i][3]));
                 } break;
                 case "Pomme":{
-                    lst.add(new Pomme((Double) tab[i][1], (String) tab[i][2]));
+                    lst.add(new Pomme((int)tab[i][0], (Double) tab[i][2], (String) tab[i][3]));
                 } break;
             }
         }

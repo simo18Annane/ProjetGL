@@ -1,17 +1,20 @@
 package fr.ufrsciencestech.panier.model;
 
 public class Pomme implements Fruit {
+    private int id;
     private double prix;
     private String origine;
 	
     public Pomme() 
     {
+        this.id = 0;
         this.prix = 0.0;  //prix en euros
         this.origine= "";
     }
     
-    public Pomme(double prix, String origine) 
+    public Pomme(int id, double prix, String origine) 
     {
+        this.id = id;
 	this.prix = prix;
         this.origine = origine;
     }
@@ -37,6 +40,14 @@ public class Pomme implements Fruit {
         else
             this.origine = origine;
     }
+    
+    public int getId(){
+        return this.id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
+    }
 
     @Override
     public String getNom() {
@@ -45,7 +56,7 @@ public class Pomme implements Fruit {
 
     @Override
     public String toString(){
-        return "Pomme de " + origine + " à " + prix + " €/kg";
+        return id + "- Pomme de " + origine + " à " + prix + " €/kg";
     }
 
     @Override

@@ -9,15 +9,18 @@ package fr.ufrsciencestech.panier.model;
  * @author HP
  */
 public class Papaye implements Fruit{
+    private int id;
     private double prix;
     private String origine;
     
     public Papaye(){
+        this.id = 0;
         this.prix = 0.0;
         this.origine = "";
     }
 
-    public Papaye(double prix, String origine) {
+    public Papaye(int id, double prix, String origine) {
+        this.id = id;
         this.prix = prix;
         this.origine = origine;
     }
@@ -44,6 +47,14 @@ public class Papaye implements Fruit{
         else
             this.origine = origine;
     }
+    
+    public int getId(){
+        return this.id;
+    }
+    
+    public void setId(int id){
+        this.id = id;
+    }
 
     @Override
     public String getNom() {
@@ -52,7 +63,7 @@ public class Papaye implements Fruit{
     
     @Override
     public String toString() {
-        return "Papaye de " + origine + " à " + prix + " €/kg";
+        return id + "- Papaye de " + origine + " à " + prix + " €/kg";
     }
 
     @Override

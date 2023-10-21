@@ -94,6 +94,11 @@ public class InterfaceFruit extends javax.swing.JFrame {
         return this.listModel;
     }
     
+    
+    //recuperer le nom du panier selectionner
+    public void receivePanier(String panier){
+        jLabelNomPanier.setText(panier);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -333,7 +338,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabelNomPanier.setText("Panier1");
+        jLabelNomPanier.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -559,6 +564,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
         if(boutonAjoutBoycottListener != null){
             boutonAjoutBoycottListener.actionPerformed(evt);
         }
+        jTextFieldSaisie.setText("");
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     private void jTextFieldSaisieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSaisieActionPerformed

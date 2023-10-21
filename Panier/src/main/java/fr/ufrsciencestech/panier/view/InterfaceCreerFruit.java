@@ -4,6 +4,7 @@
  */
 package fr.ufrsciencestech.panier.view;
 
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
@@ -58,6 +59,23 @@ public class InterfaceCreerFruit extends javax.swing.JFrame {
         return jTextFieldOrigine.getText();
     }
     
+    public void retourResultat(String res){
+        Timer timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                resultat.setText("");
+            }
+        });
+        resultat.setText(res);
+        timer.setRepeats(false);
+        timer.start();
+    }
+    
+    public void reinit(){
+        jTextFieldPrix.setText("");
+        jTextFieldOrigine.setText("");
+    }
+    
 
 
     /**
@@ -82,6 +100,10 @@ public class InterfaceCreerFruit extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabelOrigine = new javax.swing.JLabel();
         jTextFieldOrigine = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        resultat = new javax.swing.JLabel();
         jPanelBouton = new javax.swing.JPanel();
         jButtonAbandonner = new javax.swing.JButton();
         jButtonValider = new javax.swing.JButton();
@@ -168,6 +190,48 @@ public class InterfaceCreerFruit extends javax.swing.JFrame {
         jLabelOrigine.setText("Origine :");
         jPanelGrilleInfo.add(jLabelOrigine);
         jPanelGrilleInfo.add(jTextFieldOrigine);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 157, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 25, Short.MAX_VALUE)
+        );
+
+        jPanelGrilleInfo.add(jPanel5);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 157, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 25, Short.MAX_VALUE)
+        );
+
+        jPanelGrilleInfo.add(jPanel6);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 157, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 25, Short.MAX_VALUE)
+        );
+
+        jPanelGrilleInfo.add(jPanel7);
+
+        resultat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanelGrilleInfo.add(resultat);
 
         jPanelBouton.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -275,11 +339,15 @@ public class InterfaceCreerFruit extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanelBouton;
     private javax.swing.JPanel jPanelGrilleInfo;
     private javax.swing.JPanel jPanelTitre;
     private javax.swing.JTextField jTextFieldOrigine;
     private javax.swing.JTextField jTextFieldPrix;
     private javax.swing.JComboBox<String> listFruit;
+    private javax.swing.JLabel resultat;
     // End of variables declaration//GEN-END:variables
 }

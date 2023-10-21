@@ -4,7 +4,9 @@
  */
 package fr.ufrsciencestech.panier.view;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Timer;
 /**
  *
  * @author betul
@@ -47,6 +49,24 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
     public int getCapacite(){
         return Integer.parseInt(jTextFieldCapaciteMax.getText());
     }
+    
+    public void retourResultat(String res){
+        Timer timer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                resultat.setText("");
+            }
+        });
+        resultat.setText(res);
+        timer.setRepeats(false);
+        timer.start();
+    }
+    
+    public void reinit(){
+        jTextFieldNom.setText("");
+        jTextFieldType.setText("");
+        jTextFieldCapaciteMax.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,6 +92,8 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
         jPanelBouton = new javax.swing.JPanel();
         jButtonAbandonner = new javax.swing.JButton();
         jButtonValider = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        resultat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -175,6 +197,19 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
         });
         jPanelBouton.add(jButtonValider);
 
+        resultat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(resultat, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(resultat, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -186,6 +221,10 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
                     .addComponent(jPanelBouton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelGrilleInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
                 .addGap(57, 57, 57))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(101, 101, 101)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,9 +232,11 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
                 .addComponent(jPanelTitre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelGrilleInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jPanelBouton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(15, 15, 15)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelBouton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -258,11 +299,13 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelBouton;
     private javax.swing.JPanel jPanelGrilleInfo;
     private javax.swing.JPanel jPanelTitre;
     private javax.swing.JTextField jTextFieldCapaciteMax;
     private javax.swing.JTextField jTextFieldNom;
     private javax.swing.JTextField jTextFieldType;
+    private javax.swing.JLabel resultat;
     // End of variables declaration//GEN-END:variables
 }
