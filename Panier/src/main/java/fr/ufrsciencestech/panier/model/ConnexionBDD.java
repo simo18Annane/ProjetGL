@@ -247,5 +247,40 @@ public class ConnexionBDD {
         return new Object[0][0];
     }
     
+    //recuperer le prix/kg pour un fruit avec un id
+    public double getPrixFruit(int id){
+        double prix = 0;
+        String requete = "SELECT price FROM fruit WHERE id='" + id +"'";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
+                ResultSet resultSet = preparedStatement.executeQuery()) {
+            while(resultSet.next()){
+                prix = resultSet.getDouble("price");
+            }
+        } catch (SQLException e){
+            System.err.println("Ereur lors de la récuperation du prix");
+        }
+        return prix;
+    }
+    
+    //ajouter un fruit à un panier
+    public void insertFruitToPanier(String nom, int id, double poid, double valeur){
+        String requete = "INSERT INTO operation (name, idFruit, poid, value) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            preparedStatement.setString(1, nom);
+            preparedStatement.setInt(2, id);
+            preparedStatement.setDouble(3, poid);
+            preparedStatement.setDouble(4, valeur);
+            
+            int rows = preparedStatement.executeUpdate();
+            if(rows > 0){
+                System.out.println("données insérées avec succés");
+            } else {
+                System.out.println("Aucune donnée insérée");
+            }
+        } catch (SQLException e){
+            System.err.println("Erreurlors de l'insertion de données à la bdd: " + e.getMessage());
+        }
+    }
+    
     
 }

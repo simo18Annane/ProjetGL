@@ -226,6 +226,19 @@ public class Controller {
             }
         });
         
+        //l'action sur le bouton ajouter un fruit au panier dans InterfaceFruit
+        viewIF.buttonAjoutFruitListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                cnxdb = new ConnexionBDD();
+                String nomPanier = ip.getPanier();
+                int idFruit = fr.recupererFruit();
+                double poid = fr.getPoid();
+                double valeur = cnxdb.getPrixFruit(idFruit) * poid;
+                cnxdb.insertFruitToPanier(nomPanier, idFruit, poid, valeur);
+            }
+        });
+        
     }
     
     //transferer le tableau à une liste

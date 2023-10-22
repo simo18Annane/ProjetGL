@@ -20,6 +20,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
     private DefaultListModel<String> listModel;
     private ActionListener boutonRechercheListener;
     private ActionListener boutonAjoutBoycottListener;
+    private ActionListener boutonAjoutFruitListener;
 
     /**
      * Creates new form InterfaceFruit
@@ -95,9 +96,41 @@ public class InterfaceFruit extends javax.swing.JFrame {
     }
     
     
-    //recuperer le nom du panier selectionner
+    //recevoir le nom du panier selectionner
     public void receivePanier(String panier){
         jLabelNomPanier.setText(panier);
+    }
+    
+    //pour ajouter un fruit au panier
+    public void buttonAjoutFruitListener(ActionListener listener) {
+        this.boutonAjoutFruitListener = listener;
+    }
+    
+    //recuperer l'id du fruit selectionner
+    public int recupererFruit(){
+        String text = jComboBoxFruit.getSelectedItem().toString();
+        String[] separer = text.split("-");
+        String numberString = separer[0].trim();
+        try {
+            int number = Integer.parseInt(numberString);
+            return number;
+        } catch (NumberFormatException ex){
+            System.out.println("erreur lors de la récuperation de l'id d'un fruit");
+        }
+        return 0;
+    }
+    
+    //recuperer le nombre de kilo
+    public double getPoid(){
+        if(!Poids.getText().isEmpty())
+            return Double.parseDouble(Poids.getText());
+        else 
+            return 1;
+    }
+    
+    //reinitialiser le poid
+    public void reinitPoid(){
+        Poids.setText("");
     }
 
     /**
@@ -585,6 +618,9 @@ public class InterfaceFruit extends javax.swing.JFrame {
 
     private void jButtonValiderAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderAjoutActionPerformed
         // TODO add your handling code here:
+        if(boutonAjoutFruitListener != null){
+            boutonAjoutFruitListener.actionPerformed(evt);
+        }
     }//GEN-LAST:event_jButtonValiderAjoutActionPerformed
 
     private void jMenuItemCreerPanierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCreerPanierActionPerformed
