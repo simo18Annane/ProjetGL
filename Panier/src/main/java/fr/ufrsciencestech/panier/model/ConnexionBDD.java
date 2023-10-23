@@ -168,9 +168,9 @@ public class ConnexionBDD {
             String requete = "INSERT INTO panier (name, type, maxcapacity, value) VALUES (?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(requete)) {
                 preparedStatement.setString(1, nom);
-                preparedStatement.setString(4, type);
-                preparedStatement.setInt(2, capacité);
-                preparedStatement.setDouble(3, value);
+                preparedStatement.setString(2, type);
+                preparedStatement.setInt(3, capacité);
+                preparedStatement.setDouble(4, value);
 
 
                 int rows = preparedStatement.executeUpdate();
@@ -206,6 +206,22 @@ public class ConnexionBDD {
         }
         
         return panier;
+    }
+    
+    //recuperer le type de chaque panier
+    public String typePanier(String nom){
+        String typePanier = "";
+        String requete = "SELECT type FROM panier WHERE name='" + nom + "'";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
+            ResultSet resultSet = preparedStatement.executeQuery()){
+            if(resultSet.next()){
+                typePanier = resultSet.getString("type");
+                
+            }
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la récuperation des données: " + e.getMessage());
+        }
+        return typePanier;
     }
     
     //pour trier les fruits en utilisant le filtre fruit
@@ -262,25 +278,195 @@ public class ConnexionBDD {
         return prix;
     }
     
-    //ajouter un fruit à un panier
-    public void insertFruitToPanier(String nom, int id, double poid, double valeur){
-        String requete = "INSERT INTO operation (name, idFruit, poid, value) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
-            preparedStatement.setString(1, nom);
+    //verifier si un fruit existe deja dans un panier avant de l'ajouter
+    public boolean verifFruitPanier(String nom, int id){
+        String requete = "SELECT COUNT(*) FROM operation WHERE name = ? AND idFruit = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            preparedStatement.setString(1,nom);
             preparedStatement.setInt(2, id);
-            preparedStatement.setDouble(3, poid);
-            preparedStatement.setDouble(4, valeur);
             
-            int rows = preparedStatement.executeUpdate();
-            if(rows > 0){
-                System.out.println("données insérées avec succés");
-            } else {
-                System.out.println("Aucune donnée insérée");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                int count = resultSet.getInt(1);
+                return count > 0;
             }
         } catch (SQLException e){
-            System.err.println("Erreurlors de l'insertion de données à la bdd: " + e.getMessage());
+            System.err.println("Erreur lors de la verification: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    //ajouter un fruit à un panier
+    public String insertFruitToPanier(String nom, int id, double poid, double valeur){
+        if(!verifFruitPanier(nom, id)){
+            String requete = "INSERT INTO operation (name, idFruit, poid, value) VALUES (?, ?, ?, ?)";
+            if(getLengthPanier(nom) < getMaxCapacity(nom)){
+                try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+                    preparedStatement.setString(1, nom);
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.setDouble(3, poid);
+                    preparedStatement.setDouble(4, valeur);
+
+                    int rows = preparedStatement.executeUpdate();
+                    if(rows > 0){
+                        System.out.println("données insérées avec succés");
+                    } else {
+                        System.out.println("Aucune donnée insérée");
+                    }
+                } catch (SQLException e){
+                    System.err.println("Erreurlors de l'insertion de données à la bdd: " + e.getMessage());
+                }
+                updateValuePanier(nom);
+                return "";
+            } else {
+                return "le panier est plein";
+            }
+        } else{
+            return "le fruit existe deja dans le panier";
         }
     }
     
+    //recuperer les fruits d'un panier à partir le nom du panier pour la page d'accueil
+    public List<String> getFruitFromPanier(String nom){
+        List<String> fruit = new ArrayList<>();
+        
+        String requete = "SELECT o.poid, o.value, o.idFruit, f.name, f.price, f.origin FROM operation o INNER JOIN fruit f ON o.idFruit = f.id WHERE o.name = '" + nom + "'";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+            while (resultSet.next()){
+                double poid = resultSet.getDouble("poid");
+                double valeur = resultSet.getDouble("value");
+                int id = resultSet.getInt("idFruit");
+                String nomFruit = resultSet.getString("name");
+                double prix = resultSet.getDouble("price");
+                String origine = resultSet.getString("origin");
+                
+                String affichage = id + "- " + nomFruit + " de " + origine + " ---------- " + poid + " Kg * " + prix + "€ = " + valeur + "";
+                fruit.add(affichage);
+            }
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la récuperation des données");
+        }
+        return fruit;
+    }
+    
+    //recuperer la capacité max d'un panier à partir de son nom
+    public int getMaxCapacity(String nom){
+        int cap = -1;
+        String requete = "SELECT maxcapacity FROM panier WHERE name ='" + nom + "'";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+            if (resultSet.next()){
+                cap = resultSet.getInt("maxcapacity");
+                
+            }
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la récuperation des données: " + e.getMessage());
+        }
+        
+        return cap;
+    }
+    
+    //recuperer la taille d'un panier à partir du table operation
+    public int getLengthPanier(String nom){
+        int length = 0;
+        String requete = "Select COUNT(*) FROM operation WHERE name ='" + nom +"'";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+            if(resultSet.next()){
+                length = resultSet.getInt(1);
+            }
+        } catch (SQLException e){
+            System.out.println("Erreur lors de la vérification: " + e.getMessage());
+        }
+        return length;
+    }
+    
+    //supprimer un panier
+    public boolean deletePanier(String nom){
+        String requetePanier = "DELETE FROM panier WHERE name = ?";
+        String requeteOperation = "DELETE FROM operation WHERE name = ?";
+        try(PreparedStatement panierStatement = connection.prepareStatement(requetePanier);
+                PreparedStatement operationStatement = connection.prepareStatement(requeteOperation)){
+            panierStatement.setString(1, nom);
+            operationStatement.setString(1, nom);
+            int rows = panierStatement.executeUpdate();
+            int rowsOp = operationStatement.executeUpdate();
+            if(rows > 0){
+                System.out.println("Panier supprimer avec succès");
+                return true;
+            } else {
+                System.out.println("Aucun panier supprimé (panier introuvable).");
+                return false;
+            }
+           
+            
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la suppression du panier: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    //recuperer le cout d'un panier à partir de son nom
+    public double getCout(String nom){
+        double cout = 0;
+        String requete = "SELECT value FROM panier WHERE name ='" + nom + "'";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+            if (resultSet.next()){
+                cout = resultSet.getDouble("value");
+                
+            }
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la récuperation des données: " + e.getMessage());
+        }
+        
+        return cout;
+    }
+    
+    //calculer le cout d'un panier
+    public double calculerCout(String nom){
+        double cout = 0;
+        String requete = "SELECT value FROM operation WHERE name ='" + nom + "'";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
+                ResultSet resultSet = preparedStatement.executeQuery()){
+            while (resultSet.next()){
+                cout =  cout + resultSet.getDouble("value");
+                
+            }
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la récuperation des données: " + e.getMessage());
+        }
+        
+        return cout;
+    }
+    
+    //mettre à jour le cout dans la table bdd panier
+    public void updateValuePanier(String nom){
+        double cout = calculerCout(nom);
+        String requete = "UPDATE panier SET value = ? WHERE name = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            preparedStatement.setDouble(1, cout);
+            preparedStatement.setString(2, nom);
+            
+            int rows = preparedStatement.executeUpdate();
+           
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la mise à jour du cout du panier: " + e.getMessage());
+        }
+    }
+    
+    //supprimer un fruit d'un panier
+    public void deleteFruitFromPanier(String nom, int id){
+        String requete = "DELETE FROM operation WHERE name = ? AND idFruit = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            preparedStatement.setString(1, nom);
+            preparedStatement.setInt(2, id);
+            
+            int rows = preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la suppression du fruit: " + e.getMessage());
+        }
+    }
     
 }

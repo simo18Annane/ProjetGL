@@ -510,19 +510,19 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel3" min="-2" pref="339" max="-2" attributes="0"/>
+                  <Component id="messageRetour" min="-2" pref="339" max="-2" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel3" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="messageRetour" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel3">
+            <Component class="javax.swing.JLabel" name="messageRetour">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Contenue du panier :"/>
+                <Property name="horizontalAlignment" type="int" value="0"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -554,10 +554,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jButtonValiderLIste" min="-2" pref="152" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="357" max="32767" attributes="0"/>
                           <Component id="jButtonModif" min="-2" pref="30" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jButtonSupr" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jButtonSupp" min="-2" pref="112" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -567,7 +567,7 @@
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jButtonValiderLIste" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jButtonModif" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jButtonSupr" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jButtonSupp" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -594,8 +594,9 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonModifActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButtonSupr">
+                <Component class="javax.swing.JButton" name="jButtonSupp">
                   <Properties>
+                    <Property name="text" type="java.lang.String" value="Supprimer fruit"/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[30, 30]"/>
                     </Property>
@@ -603,6 +604,9 @@
                       <Dimension value="[30, 30]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSuppActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

@@ -8,6 +8,7 @@ package fr.ufrsciencestech.panier.view;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionListener;
 /**
  *
  * @author betul
@@ -15,9 +16,12 @@ import java.awt.event.ActionListener;
 public class InterfacePanier extends javax.swing.JFrame {
     
     private DefaultListModel<String> listModel;
+    private DefaultListModel<String> listFruit;
     private ActionListener boutonModifListener;
     private ActionListener boutonCreerFruitListener;
     private ActionListener boutonCreerPanierListener;
+    private ListSelectionListener selectedListFruitListener;
+    private ActionListener boutonSuppPanierListener;
     
     /**
      * Creates new form InterfacePanier
@@ -46,10 +50,17 @@ public class InterfacePanier extends javax.swing.JFrame {
         //pour remplir la liste des paniers
         listModel = new DefaultListModel<>();
         jListPanier.setModel(listModel);
+        listFruit = new DefaultListModel<>();
+        jlistFruit.setModel(listFruit);
         
+        desactiverButton();
+
+    }
+    
+    //desactiver les buttons supprimer et modifier
+    public void desactiverButton(){
         jButtonModifier.setEnabled(false);
         jButtonSupprimer.setEnabled(false);
-
     }
     
     //remplir la liste des paniers 
@@ -79,6 +90,34 @@ public class InterfacePanier extends javax.swing.JFrame {
     //pour recuperer le panier selectionner
     public String getPanier(){
         return jListPanier.getSelectedValue();
+    }
+    
+    //liste des fruits de chaque panier
+    public void remplirListFruit(String element){
+        listFruit.addElement(element);
+    }
+    
+    public void reinitListFruit(){
+        listFruit.removeAllElements();
+    }
+    
+    public void selectedFruitListener(ListSelectionListener listener){
+        this.selectedListFruitListener = listener;
+    }
+    
+    //recuperer le type de chaque panier
+    public void receiveType(String type){
+        jLabelAfficherType.setText(type);
+    }
+    
+    //supprimer un panier
+    public void buttonSuppPanierListener(ActionListener listener){
+        this.boutonSuppPanierListener = listener;
+    }
+    
+    //afficher le cout d'un panier
+    public void afficherCout(String cout){
+        jLabelAfficheCout.setText(cout);
     }
 
     
@@ -114,7 +153,7 @@ public class InterfacePanier extends javax.swing.JFrame {
         jLabelEspace = new javax.swing.JLabel();
         jLabelContenue = new javax.swing.JLabel();
         jScrollPaneListeFruit = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        jlistFruit = new javax.swing.JList<>();
         jButtonModifier = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuAjouter = new javax.swing.JMenu();
@@ -241,17 +280,13 @@ public class InterfacePanier extends javax.swing.JFrame {
 
         jLabelType.setText("Type : ");
 
-        jLabelAfficherType.setText("Jus");
-
         jLabelCout.setText("Coût total:");
-
-        jLabelAfficheCout.setText("5");
 
         jLabelEspace.setText("€");
 
         jLabelContenue.setText("Contenue du panier :");
 
-        jScrollPaneListeFruit.setViewportView(jList3);
+        jScrollPaneListeFruit.setViewportView(jlistFruit);
 
         javax.swing.GroupLayout jPanelContenuePanierLayout = new javax.swing.GroupLayout(jPanelContenuePanier);
         jPanelContenuePanier.setLayout(jPanelContenuePanierLayout);
@@ -266,9 +301,9 @@ public class InterfacePanier extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelAfficherType)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelCout)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelAfficheCout, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelCout, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelAfficheCout, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelEspace, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19)))
@@ -380,6 +415,9 @@ public class InterfacePanier extends javax.swing.JFrame {
 
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
         // TODO add your handling code here:
+        if(boutonSuppPanierListener != null){
+            boutonSuppPanierListener.actionPerformed(evt);
+        }
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
@@ -413,6 +451,9 @@ public class InterfacePanier extends javax.swing.JFrame {
         jLabelNomPanier.setText(jListPanier.getSelectedValue());
         jButtonModifier.setEnabled(true);
         jButtonSupprimer.setEnabled(true);
+        if(selectedListFruitListener != null){
+            selectedListFruitListener.valueChanged(evt);
+        }
     }//GEN-LAST:event_jListPanierValueChanged
 
     /**
@@ -465,7 +506,6 @@ public class InterfacePanier extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelListePanier;
     private javax.swing.JLabel jLabelNomPanier;
     private javax.swing.JLabel jLabelType;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JList<String> jListPanier;
     private javax.swing.JMenu jMenuAjouter;
     private javax.swing.JMenuBar jMenuBar;
@@ -480,5 +520,6 @@ public class InterfacePanier extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPaneListeFruit;
     private javax.swing.JTextField jTextFieldRecherche;
+    private javax.swing.JList<String> jlistFruit;
     // End of variables declaration//GEN-END:variables
 }

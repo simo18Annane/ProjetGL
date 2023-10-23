@@ -320,9 +320,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabelAfficherType" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jLabelCout" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabelAfficheCout" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jLabelCout" min="-2" pref="71" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jLabelAfficheCout" min="-2" pref="46" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabelEspace" min="-2" pref="16" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
@@ -359,9 +359,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelAfficherType">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Jus"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelCout">
               <Properties>
@@ -369,9 +366,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelAfficheCout">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="5"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelEspace">
               <Properties>
@@ -390,7 +384,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="jList3">
+                <Component class="javax.swing.JList" name="jlistFruit">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="0"/>

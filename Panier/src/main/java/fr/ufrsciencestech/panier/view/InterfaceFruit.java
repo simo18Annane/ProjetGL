@@ -18,9 +18,11 @@ import java.awt.event.ActionListener;
 public class InterfaceFruit extends javax.swing.JFrame {
     
     private DefaultListModel<String> listModel;
+    private DefaultListModel<String> listFruit;
     private ActionListener boutonRechercheListener;
     private ActionListener boutonAjoutBoycottListener;
     private ActionListener boutonAjoutFruitListener;
+    private ActionListener boutonSuppFruitListener;
 
     /**
      * Creates new form InterfaceFruit
@@ -48,16 +50,19 @@ public class InterfaceFruit extends javax.swing.JFrame {
         jButtonSuprBoycot.setIcon(IconSuprBoycot);
         
         ImageIcon IconSupr = new ImageIcon("src/main/java/image/corbeil.png");
-        jButtonSupr.setIcon(IconSupr);
+        jButtonSupp.setIcon(IconSupr);
         
         ImageIcon IconModif = new ImageIcon("src/main/java/image/modifier.png");
         jButtonModif.setIcon(IconModif);
         //pour la liste des pays à boycotter
         listModel = new DefaultListModel<>();
         jListBoycot.setModel(listModel);
+        listFruit = new DefaultListModel<>();
+        jListFruit.setModel(listFruit);
        
        
     }
+    
     
     
     //remplir la liste de fruit proposée au client lors du remplissage du panier
@@ -106,9 +111,23 @@ public class InterfaceFruit extends javax.swing.JFrame {
         this.boutonAjoutFruitListener = listener;
     }
     
-    //recuperer l'id du fruit selectionner
+    //recuperer l'id du fruit selectionner pour l'ajouter au panier
     public int recupererFruit(){
         String text = jComboBoxFruit.getSelectedItem().toString();
+        String[] separer = text.split("-");
+        String numberString = separer[0].trim();
+        try {
+            int number = Integer.parseInt(numberString);
+            return number;
+        } catch (NumberFormatException ex){
+            System.out.println("erreur lors de la récuperation de l'id d'un fruit");
+        }
+        return 0;
+    }
+    
+    //recuperer l'id di fruit selectionner pour le supprimer
+    public int getIdFruit(){
+        String text = jListFruit.getSelectedValue();
         String[] separer = text.split("-");
         String numberString = separer[0].trim();
         try {
@@ -131,6 +150,25 @@ public class InterfaceFruit extends javax.swing.JFrame {
     //reinitialiser le poid
     public void reinitPoid(){
         Poids.setText("");
+    }
+    
+    //afficher la liste des fruits d'un panier
+    public void remplirListFruit(String element){
+        listFruit.addElement(element);
+    }
+    
+    public void reinitListFruit(){
+        listFruit.removeAllElements();
+    }
+    
+    //pour le message retour qui verifie si le panier est plein
+    public void receiveMessageRetour(String msg){
+        messageRetour.setText(msg);
+    }
+    
+    //pour supprimer un fruit d'un panier
+    public void buttonSuppFruitListener(ActionListener listener) {
+        this.boutonSuppFruitListener = listener;
     }
 
     /**
@@ -170,12 +208,12 @@ public class InterfaceFruit extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButtonValiderAjout = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        messageRetour = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanelValider = new javax.swing.JPanel();
         jButtonValiderLIste = new javax.swing.JButton();
         jButtonModif = new javax.swing.JButton();
-        jButtonSupr = new javax.swing.JButton();
+        jButtonSupp = new javax.swing.JButton();
         jPanelListePanier = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListFruit = new javax.swing.JList<>();
@@ -428,17 +466,17 @@ public class InterfaceFruit extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel3.setText("Contenue du panier :");
+        messageRetour.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(messageRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(messageRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jButtonValiderLIste.setText("Valider");
@@ -456,8 +494,14 @@ public class InterfaceFruit extends javax.swing.JFrame {
             }
         });
 
-        jButtonSupr.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButtonSupr.setMinimumSize(new java.awt.Dimension(30, 30));
+        jButtonSupp.setText("Supprimer fruit");
+        jButtonSupp.setMaximumSize(new java.awt.Dimension(30, 30));
+        jButtonSupp.setMinimumSize(new java.awt.Dimension(30, 30));
+        jButtonSupp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSuppActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelValiderLayout = new javax.swing.GroupLayout(jPanelValider);
         jPanelValider.setLayout(jPanelValiderLayout);
@@ -465,10 +509,10 @@ public class InterfaceFruit extends javax.swing.JFrame {
             jPanelValiderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelValiderLayout.createSequentialGroup()
                 .addComponent(jButtonValiderLIste, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, Short.MAX_VALUE)
                 .addComponent(jButtonModif, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonSupr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonSupp, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelValiderLayout.setVerticalGroup(
@@ -476,7 +520,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
             .addGroup(jPanelValiderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jButtonValiderLIste, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jButtonModif, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButtonSupr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonSupp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jScrollPane2.setViewportView(jListFruit);
@@ -667,6 +711,13 @@ public class InterfaceFruit extends javax.swing.JFrame {
         nouvelleInterface.setVisible(true);
     }//GEN-LAST:event_jButtonModifActionPerformed
 
+    private void jButtonSuppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuppActionPerformed
+        // TODO add your handling code here:
+        if(boutonSuppFruitListener != null){
+            boutonSuppFruitListener.actionPerformed(evt);
+        }
+    }//GEN-LAST:event_jButtonSuppActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -707,13 +758,12 @@ public class InterfaceFruit extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonModif;
     private javax.swing.JButton jButtonRecherche;
-    private javax.swing.JButton jButtonSupr;
+    private javax.swing.JButton jButtonSupp;
     private javax.swing.JButton jButtonSuprBoycot;
     private javax.swing.JButton jButtonValiderAjout;
     private javax.swing.JButton jButtonValiderLIste;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBoxFruit;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelBoycot;
@@ -744,5 +794,6 @@ public class InterfaceFruit extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldSaisie;
+    private javax.swing.JLabel messageRetour;
     // End of variables declaration//GEN-END:variables
 }
