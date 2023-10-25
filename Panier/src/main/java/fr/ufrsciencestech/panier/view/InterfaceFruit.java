@@ -8,6 +8,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 
@@ -59,10 +61,15 @@ public class InterfaceFruit extends javax.swing.JFrame {
         jListBoycot.setModel(listModel);
         listFruit = new DefaultListModel<>();
         jListFruit.setModel(listFruit);
-       
+        
+        desactiverButtonSupp();
        
     }
     
+    //desactiver le button supprimer
+    public void desactiverButtonSupp(){
+        jButtonSupp.setEnabled(false);
+    }
     
     
     //remplir la liste de fruit proposée au client lors du remplissage du panier
@@ -171,6 +178,14 @@ public class InterfaceFruit extends javax.swing.JFrame {
         this.boutonSuppFruitListener = listener;
     }
 
+    //initialiser la liste des pays à boycotter
+    public void reinitListBoycott(){
+        listModel.removeAllElements();
+    }
+    
+    public JFrame getMainFrame(){
+        return this;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -523,6 +538,11 @@ public class InterfaceFruit extends javax.swing.JFrame {
                 .addComponent(jButtonSupp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jListFruit.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListFruitValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(jListFruit);
 
         javax.swing.GroupLayout jPanelListePanierLayout = new javax.swing.GroupLayout(jPanelListePanier);
@@ -662,6 +682,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
 
     private void jButtonValiderAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderAjoutActionPerformed
         // TODO add your handling code here:
+        jButtonSupp.setEnabled(false);
         if(boutonAjoutFruitListener != null){
             boutonAjoutFruitListener.actionPerformed(evt);
         }
@@ -705,18 +726,23 @@ public class InterfaceFruit extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jListBoycotValueChanged
 
-    private void jButtonModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifActionPerformed
-        InterfaceModifieFruit nouvelleInterface = new InterfaceModifieFruit();
-        // Rendez la nouvelle interface visible
-        nouvelleInterface.setVisible(true);
-    }//GEN-LAST:event_jButtonModifActionPerformed
-
     private void jButtonSuppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuppActionPerformed
         // TODO add your handling code here:
         if(boutonSuppFruitListener != null){
             boutonSuppFruitListener.actionPerformed(evt);
         }
     }//GEN-LAST:event_jButtonSuppActionPerformed
+
+    private void jListFruitValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListFruitValueChanged
+        // TODO add your handling code here:
+        jButtonSupp.setEnabled(true);
+    }//GEN-LAST:event_jListFruitValueChanged
+
+    private void jButtonModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifActionPerformed
+        InterfaceModifieFruit nouvelleInterface = new InterfaceModifieFruit();
+        // Rendez la nouvelle interface visible
+        nouvelleInterface.setVisible(true);
+    }//GEN-LAST:event_jButtonModifActionPerformed
 
     /**
      * @param args the command line arguments

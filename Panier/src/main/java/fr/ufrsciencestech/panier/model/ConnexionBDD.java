@@ -467,6 +467,8 @@ public class ConnexionBDD {
         } catch (SQLException e){
             System.err.println("Erreur lors de la suppression du fruit: " + e.getMessage());
         }
+        updateValuePanier(nom);
     }
+    
     
 }

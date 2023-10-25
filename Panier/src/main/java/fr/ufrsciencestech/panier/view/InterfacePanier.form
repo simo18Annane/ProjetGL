@@ -320,9 +320,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabelAfficherType" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jLabelCout" min="-2" pref="71" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jLabelAfficheCout" min="-2" pref="46" max="-2" attributes="0"/>
+                              <Component id="jLabelCout" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabelAfficheCout" min="-2" pref="72" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabelEspace" min="-2" pref="16" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
