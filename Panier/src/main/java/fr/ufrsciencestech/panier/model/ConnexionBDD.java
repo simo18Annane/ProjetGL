@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package fr.ufrsciencestech.panier.model;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -431,7 +433,12 @@ public class ConnexionBDD {
         try(PreparedStatement preparedStatement = connection.prepareStatement(requete);
                 ResultSet resultSet = preparedStatement.executeQuery()){
             while (resultSet.next()){
-                cout =  cout + resultSet.getDouble("value");
+                BigDecimal att1 = BigDecimal.valueOf(cout);
+                BigDecimal att2 = BigDecimal.valueOf(resultSet.getDouble("value"));
+                BigDecimal res = att1.add(att2);
+                res =  res.setScale(2, RoundingMode.HALF_UP);
+                cout = res.doubleValue();
+                
                 
             }
         } catch (SQLException e){
@@ -470,5 +477,30 @@ public class ConnexionBDD {
         updateValuePanier(nom);
     }
     
+    //mettre à jour le poid d'un fruit dans un panier
+    public void updatePoidFruit(String nom, int id, double poid){
+        double newValue = getNewValue(id, poid);
+        String requete = "UPDATE operation SET poid = ? , value = ? WHERE name = ? AND idFruit = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            preparedStatement.setDouble(1, poid);
+            preparedStatement.setDouble(2,newValue);
+            preparedStatement.setString(3, nom);
+            preparedStatement.setInt(4,id);
+            
+            int rows = preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la mise à jour du poid d'un fruit: " + e.getMessage());
+        }
+        updateValuePanier(nom);
+    }
     
+    //calculer nouveau value d'un fruit apres la modification du poid
+    public double getNewValue(int id, double poid){
+        BigDecimal att1 = BigDecimal.valueOf(getPrixFruit(id));
+        BigDecimal att2 = BigDecimal.valueOf(poid);
+        BigDecimal res = att1.multiply(att2);
+        res =  res.setScale(2, RoundingMode.HALF_UP);
+        double valeur = res.doubleValue();
+        return valeur;
+    }
 }

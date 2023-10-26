@@ -25,6 +25,8 @@ public class InterfaceFruit extends javax.swing.JFrame {
     private ActionListener boutonAjoutBoycottListener;
     private ActionListener boutonAjoutFruitListener;
     private ActionListener boutonSuppFruitListener;
+    private ActionListener boutonModifPoidListener;
+    private ActionListener boutonQuitterListener;
 
     /**
      * Creates new form InterfaceFruit
@@ -32,7 +34,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
     public InterfaceFruit() {
         initComponents();
         setTitle("Gestion de Fruits");
-        setSize(710,510);
+        setSize(1100,600);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);
 
@@ -55,7 +57,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
         jButtonSupp.setIcon(IconSupr);
         
         ImageIcon IconModif = new ImageIcon("src/main/java/image/modifier.png");
-        jButtonModif.setIcon(IconModif);
+        //jButtonModif.setIcon(IconModif);
         //pour la liste des pays à boycotter
         listModel = new DefaultListModel<>();
         jListBoycot.setModel(listModel);
@@ -63,12 +65,18 @@ public class InterfaceFruit extends javax.swing.JFrame {
         jListFruit.setModel(listFruit);
         
         desactiverButtonSupp();
+        desactiverButtonModif();
        
     }
     
     //desactiver le button supprimer
     public void desactiverButtonSupp(){
         jButtonSupp.setEnabled(false);
+    }
+    
+    //desactiver le bouton modifier
+    public void desactiverButtonModif(){
+        jButtonModifierPoid.setEnabled(false);
     }
     
     
@@ -186,6 +194,28 @@ public class InterfaceFruit extends javax.swing.JFrame {
     public JFrame getMainFrame(){
         return this;
     }
+    
+    //recuperer le nouveau poid pour la modification
+    public double getNewPoid(){
+        if(!nvPoid.getText().isEmpty())
+            return Double.parseDouble(nvPoid.getText());
+        else 
+            return 1;
+    }
+    
+    public void reinitNPoid(){
+        nvPoid.setText("");
+    }
+    
+    //pour modifier le poid 
+    public void buttonModifPoidListener(ActionListener listener){
+        this.boutonModifPoidListener = listener;
+    }
+    
+    //pour quitter
+    public void buttonQuitterListener(ActionListener listener){
+        this.boutonQuitterListener = listener;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -226,16 +256,16 @@ public class InterfaceFruit extends javax.swing.JFrame {
         messageRetour = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanelValider = new javax.swing.JPanel();
-        jButtonValiderLIste = new javax.swing.JButton();
-        jButtonModif = new javax.swing.JButton();
         jButtonSupp = new javax.swing.JButton();
+        jButtonModifierPoid = new javax.swing.JButton();
+        nvPoid = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jPanelListePanier = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListFruit = new javax.swing.JList<>();
+        jPanel5 = new javax.swing.JPanel();
+        jButtonQuitterPanier = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenuAjouter = new javax.swing.JMenu();
-        jMenuItemCreerPanier = new javax.swing.JMenuItem();
-        jMenuItemCreerFruit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -494,21 +524,6 @@ public class InterfaceFruit extends javax.swing.JFrame {
             .addComponent(messageRetour, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        jButtonValiderLIste.setText("Valider");
-        jButtonValiderLIste.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonValiderLIsteActionPerformed(evt);
-            }
-        });
-
-        jButtonModif.setMaximumSize(new java.awt.Dimension(30, 30));
-        jButtonModif.setMinimumSize(new java.awt.Dimension(30, 30));
-        jButtonModif.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonModifActionPerformed(evt);
-            }
-        });
-
         jButtonSupp.setText("Supprimer fruit");
         jButtonSupp.setMaximumSize(new java.awt.Dimension(30, 30));
         jButtonSupp.setMinimumSize(new java.awt.Dimension(30, 30));
@@ -518,24 +533,44 @@ public class InterfaceFruit extends javax.swing.JFrame {
             }
         });
 
+        jButtonModifierPoid.setText("Modifier poid");
+        jButtonModifierPoid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModifierPoidActionPerformed(evt);
+            }
+        });
+
+        nvPoid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel1.setText("sélectionner un fruit dans le panier pour modifier le poid: ");
+
         javax.swing.GroupLayout jPanelValiderLayout = new javax.swing.GroupLayout(jPanelValider);
         jPanelValider.setLayout(jPanelValiderLayout);
         jPanelValiderLayout.setHorizontalGroup(
             jPanelValiderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelValiderLayout.createSequentialGroup()
-                .addComponent(jButtonValiderLIste, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, Short.MAX_VALUE)
-                .addComponent(jButtonModif, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nvPoid, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(jButtonModifierPoid, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonSupp, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelValiderLayout.setVerticalGroup(
             jPanelValiderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelValiderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jButtonValiderLIste, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButtonModif, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jButtonSupp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanelValiderLayout.createSequentialGroup()
+                .addGroup(jPanelValiderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSupp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonModifierPoid, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nvPoid, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanelValiderLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jListFruit.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -601,28 +636,25 @@ public class InterfaceFruit extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButtonQuitterPanier.setText("Quitter panier");
+        jButtonQuitterPanier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonQuitterPanierActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButtonQuitterPanier, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButtonQuitterPanier, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+        );
+
         jMenuBar1.setPreferredSize(new java.awt.Dimension(61, 30));
-
-        jMenuAjouter.setText("Ajouter");
-
-        jMenuItemCreerPanier.setText("Créer un panier");
-        jMenuItemCreerPanier.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCreerPanierActionPerformed(evt);
-            }
-        });
-        jMenuAjouter.add(jMenuItemCreerPanier);
-
-        jMenuItemCreerFruit.setText("Créer un Fruit");
-        jMenuItemCreerFruit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCreerFruitActionPerformed(evt);
-            }
-        });
-        jMenuAjouter.add(jMenuItemCreerFruit);
-
-        jMenuBar1.add(jMenuAjouter);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -634,9 +666,15 @@ public class InterfaceFruit extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelGauche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanelDroite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanelDroite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(205, 205, 205)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(jPanelTitreModif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -649,7 +687,9 @@ public class InterfaceFruit extends javax.swing.JFrame {
                     .addComponent(jPanelGauche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelDroite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 111, Short.MAX_VALUE))))
+                        .addGap(34, 34, 34)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 49, Short.MAX_VALUE))))
         );
 
         pack();
@@ -668,9 +708,12 @@ public class InterfaceFruit extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldSaisieActionPerformed
 
-    private void jButtonValiderLIsteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderLIsteActionPerformed
+    private void jButtonQuitterPanierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonQuitterPanierActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonValiderLIsteActionPerformed
+        if(boutonQuitterListener != null){
+            boutonQuitterListener.actionPerformed(evt);
+        }
+    }//GEN-LAST:event_jButtonQuitterPanierActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -688,24 +731,12 @@ public class InterfaceFruit extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonValiderAjoutActionPerformed
 
-    private void jMenuItemCreerPanierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCreerPanierActionPerformed
-         InterfaceCreerPanier nouvelleInterface = new InterfaceCreerPanier();
-        // Rendez la nouvelle interface visible
-        nouvelleInterface.setVisible(true);
-    }//GEN-LAST:event_jMenuItemCreerPanierActionPerformed
-
     private void jButtonRechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRechercheActionPerformed
         // TODO add your handling code here:
         if(boutonRechercheListener != null){
             boutonRechercheListener.actionPerformed(evt);
         }
     }//GEN-LAST:event_jButtonRechercheActionPerformed
-
-    private void jMenuItemCreerFruitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCreerFruitActionPerformed
-        InterfaceCreerFruit nouvelleInterface = new InterfaceCreerFruit();
-        // Rendez la nouvelle interface visible
-        nouvelleInterface.setVisible(true);
-    }//GEN-LAST:event_jMenuItemCreerFruitActionPerformed
 
     private void jButtonSuprBoycotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuprBoycotActionPerformed
 
@@ -736,13 +767,15 @@ public class InterfaceFruit extends javax.swing.JFrame {
     private void jListFruitValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListFruitValueChanged
         // TODO add your handling code here:
         jButtonSupp.setEnabled(true);
+        jButtonModifierPoid.setEnabled(true);
     }//GEN-LAST:event_jListFruitValueChanged
 
-    private void jButtonModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifActionPerformed
-        InterfaceModifieFruit nouvelleInterface = new InterfaceModifieFruit();
-        // Rendez la nouvelle interface visible
-        nouvelleInterface.setVisible(true);
-    }//GEN-LAST:event_jButtonModifActionPerformed
+    private void jButtonModifierPoidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierPoidActionPerformed
+        // TODO add your handling code here:
+        if(boutonModifPoidListener != null){
+            boutonModifPoidListener.actionPerformed(evt);
+        }
+    }//GEN-LAST:event_jButtonModifierPoidActionPerformed
 
     /**
      * @param args the command line arguments
@@ -782,14 +815,15 @@ public class InterfaceFruit extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Poids;
     private javax.swing.JButton jButtonAjouter;
-    private javax.swing.JButton jButtonModif;
+    private javax.swing.JButton jButtonModifierPoid;
+    private javax.swing.JButton jButtonQuitterPanier;
     private javax.swing.JButton jButtonRecherche;
     private javax.swing.JButton jButtonSupp;
     private javax.swing.JButton jButtonSuprBoycot;
     private javax.swing.JButton jButtonValiderAjout;
-    private javax.swing.JButton jButtonValiderLIste;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBoxFruit;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelBoycot;
@@ -797,14 +831,12 @@ public class InterfaceFruit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNomPanier;
     private javax.swing.JList<String> jListBoycot;
     private javax.swing.JList<String> jListFruit;
-    private javax.swing.JMenu jMenuAjouter;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItemCreerFruit;
-    private javax.swing.JMenuItem jMenuItemCreerPanier;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelDroite;
     private javax.swing.JPanel jPanelFiltre;
     private javax.swing.JPanel jPanelGauche;
@@ -821,5 +853,6 @@ public class InterfaceFruit extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldSaisie;
     private javax.swing.JLabel messageRetour;
+    private javax.swing.JTextField nvPoid;
     // End of variables declaration//GEN-END:variables
 }

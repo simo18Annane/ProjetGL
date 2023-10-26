@@ -86,6 +86,8 @@ public class InterfacePanier extends javax.swing.JFrame {
     public void buttonCreerPanierListener(ActionListener listener){
         this.boutonCreerPanierListener = listener;
     }
+    
+
 
     //pour recuperer le panier selectionner
     public String getPanier(){
