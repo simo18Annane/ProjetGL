@@ -8,6 +8,7 @@ package fr.ufrsciencestech.panier.view;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionListener;
 /**
  *
@@ -120,6 +121,10 @@ public class InterfacePanier extends javax.swing.JFrame {
     //afficher le cout d'un panier
     public void afficherCout(String cout){
         jLabelAfficheCout.setText(cout);
+    }
+    
+    public JFrame getMainFrame(){
+        return this;
     }
 
     

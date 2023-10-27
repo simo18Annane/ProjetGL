@@ -22,5 +22,8 @@ public class TestMVC
         Controller ctrl = new Controller(icf, ifr, icp, ipa);
         
         ipa.setVisible(true);
+        
+        
+        
     }
 }
