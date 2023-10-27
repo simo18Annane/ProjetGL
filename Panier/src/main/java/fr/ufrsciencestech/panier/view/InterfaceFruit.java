@@ -27,6 +27,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
     private ActionListener boutonSuppFruitListener;
     private ActionListener boutonModifPoidListener;
     private ActionListener boutonQuitterListener;
+    private ActionListener boutonSuppFiltreListener;
 
     /**
      * Creates new form InterfaceFruit
@@ -100,6 +101,15 @@ public class InterfaceFruit extends javax.swing.JFrame {
     
     public String getFilterText(){
         return jTextField1.getText();
+    }
+    
+    public void reinitFiltre(){
+        jTextField1.setText("");
+    }
+    
+    //pour supprimer le filtre
+    public void buttonSuppFiltreListener(ActionListener listener){
+        this.boutonSuppFiltreListener = listener;
     }
     
     public String getFilter(){
@@ -231,6 +241,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
         jPanelLigneRecherche = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jButtonRecherche = new javax.swing.JButton();
+        jButtonSuppFiltre = new javax.swing.JButton();
         jPanelFiltre = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanelTextBoycot = new javax.swing.JPanel();
@@ -297,21 +308,34 @@ public class InterfaceFruit extends javax.swing.JFrame {
             }
         });
 
+        jButtonSuppFiltre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSuppFiltreActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelLigneRechercheLayout = new javax.swing.GroupLayout(jPanelLigneRecherche);
         jPanelLigneRecherche.setLayout(jPanelLigneRechercheLayout);
         jPanelLigneRechercheLayout.setHorizontalGroup(
             jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLigneRechercheLayout.createSequentialGroup()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonSuppFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanelLigneRechercheLayout.setVerticalGroup(
             jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLigneRechercheLayout.createSequentialGroup()
-                .addGroup(jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jButtonRecherche, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLigneRechercheLayout.createSequentialGroup()
+                .addGroup(jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonRecherche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelLigneRechercheLayout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(jButtonSuppFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -416,7 +440,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanelListePays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,7 +457,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
             jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGaucheLayout.createSequentialGroup()
                 .addGroup(jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 189, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelGaucheLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -617,7 +641,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 342, Short.MAX_VALUE))
+                .addGap(0, 322, Short.MAX_VALUE))
             .addGroup(jPanelDroiteLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -777,6 +801,13 @@ public class InterfaceFruit extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonModifierPoidActionPerformed
 
+    private void jButtonSuppFiltreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuppFiltreActionPerformed
+        // TODO add your handling code here:
+        if(boutonSuppFiltreListener != null){
+            boutonSuppFiltreListener.actionPerformed(evt);
+        }
+    }//GEN-LAST:event_jButtonSuppFiltreActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -819,6 +850,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
     private javax.swing.JButton jButtonQuitterPanier;
     private javax.swing.JButton jButtonRecherche;
     private javax.swing.JButton jButtonSupp;
+    private javax.swing.JButton jButtonSuppFiltre;
     private javax.swing.JButton jButtonSuprBoycot;
     private javax.swing.JButton jButtonValiderAjout;
     private javax.swing.JComboBox<String> jComboBox1;

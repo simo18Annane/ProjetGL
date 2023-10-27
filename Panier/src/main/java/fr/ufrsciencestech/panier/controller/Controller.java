@@ -210,6 +210,7 @@ public class Controller {
                         remplirLFbyname(fr.getFilterText(), filter);
                     } break;
                 }
+               
            }
         });
         
@@ -356,6 +357,17 @@ public class Controller {
             }
         });
         
+        //supprimer le filtre des fruits
+        viewIF.buttonSuppFiltreListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                cnxdb = new ConnexionBDD();
+                fr.reinitFiltre();
+                fr.ecraserLF();
+                remplirLF();
+                cnxdb.closeConnection();
+            }
+        });
         
     }
     
