@@ -36,14 +36,15 @@ public class InterfaceCreerFruit extends javax.swing.JFrame {
         
     }
     
-    //pour initialiser la liste du nom des fruits
+    //l'action sur le bouton valider
+    public void buttonValiderListener(ActionListener listener) {
+        this.boutonValiderListener = listener;
+    }
+    
+    //remplir la liste des fruits disponible
     public void remplirComboBox(String element){
         DefaultComboBoxModel<String> comboBoxModel = (DefaultComboBoxModel<String>) listFruit.getModel();
         comboBoxModel.addElement(element);
-    }
-    
-    public void buttonValiderListener(ActionListener listener) {
-        this.boutonValiderListener = listener;
     }
     
     //pour récuperer les champs
@@ -59,6 +60,7 @@ public class InterfaceCreerFruit extends javax.swing.JFrame {
         return jTextFieldOrigine.getText();
     }
     
+    //pour le message qui s'affiche apres la creation d'un fruit
     public void retourResultat(String res){
         Timer timer = new Timer(5000, new ActionListener() {
             @Override
@@ -71,6 +73,7 @@ public class InterfaceCreerFruit extends javax.swing.JFrame {
         timer.start();
     }
     
+    //reinitialiser les champs
     public void reinit(){
         jTextFieldPrix.setText("");
         jTextFieldOrigine.setText("");
@@ -283,6 +286,7 @@ public class InterfaceCreerFruit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAbandonnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbandonnerActionPerformed
+        //fermeture de l'interface
         this.dispose();
     }//GEN-LAST:event_jButtonAbandonnerActionPerformed
 

@@ -16,13 +16,13 @@ import javax.swing.event.ListSelectionListener;
  */
 public class InterfacePanier extends javax.swing.JFrame {
     
-    private DefaultListModel<String> listModel;
+    private DefaultListModel<String> listPanier;
     private DefaultListModel<String> listFruit;
     private ActionListener boutonModifListener;
     private ActionListener boutonCreerFruitListener;
     private ActionListener boutonCreerPanierListener;
-    private ListSelectionListener selectedListFruitListener;
     private ActionListener boutonSuppPanierListener;
+    private ListSelectionListener selectedListFruitListener;
     
     /**
      * Creates new form InterfacePanier
@@ -49,28 +49,13 @@ public class InterfacePanier extends javax.swing.JFrame {
         // Affectez l'image au bouton
         jButton1.setIcon(imageIcon);
         //pour remplir la liste des paniers
-        listModel = new DefaultListModel<>();
-        jListPanier.setModel(listModel);
+        listPanier = new DefaultListModel<>();
+        jListPanier.setModel(listPanier);
         listFruit = new DefaultListModel<>();
         jlistFruit.setModel(listFruit);
         
         desactiverButton();
 
-    }
-    
-    //desactiver les buttons supprimer et modifier
-    public void desactiverButton(){
-        jButtonModifier.setEnabled(false);
-        jButtonSupprimer.setEnabled(false);
-    }
-    
-    //remplir la liste des paniers 
-    public void remplirListPanier(String element){
-        listModel.addElement(element);
-    }
-    
-    public void ecraserLP(){
-        listModel.removeAllElements();
     }
     
     //ouvrir l'interface qui contient les fruits en cliquant sur modifier
@@ -88,8 +73,31 @@ public class InterfacePanier extends javax.swing.JFrame {
         this.boutonCreerPanierListener = listener;
     }
     
-
-
+    //supprimer un panier
+    public void buttonSuppPanierListener(ActionListener listener){
+        this.boutonSuppPanierListener = listener;
+    }
+    
+    //recuperer le panier selectionner dans la liste
+    public void selectedFruitListener(ListSelectionListener listener){
+        this.selectedListFruitListener = listener;
+    }
+    
+    //desactiver les buttons supprimer et modifier
+    public void desactiverButton(){
+        jButtonModifier.setEnabled(false);
+        jButtonSupprimer.setEnabled(false);
+    }
+    
+    //remplir la liste des paniers 
+    public void remplirListPanier(String element){
+        listPanier.addElement(element);
+    }
+    
+    public void ecraserLP(){
+        listPanier.removeAllElements();
+    }
+    
     //pour recuperer le panier selectionner
     public String getPanier(){
         return jListPanier.getSelectedValue();
@@ -104,18 +112,9 @@ public class InterfacePanier extends javax.swing.JFrame {
         listFruit.removeAllElements();
     }
     
-    public void selectedFruitListener(ListSelectionListener listener){
-        this.selectedListFruitListener = listener;
-    }
-    
     //recuperer le type de chaque panier
     public void receiveType(String type){
         jLabelAfficherType.setText(type);
-    }
-    
-    //supprimer un panier
-    public void buttonSuppPanierListener(ActionListener listener){
-        this.boutonSuppPanierListener = listener;
     }
     
     //afficher le cout d'un panier

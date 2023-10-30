@@ -176,6 +176,7 @@ public class Controller {
                 fr.receivePanier(ip.getPanier() + ": capacité max = " + cnxdb.getMaxCapacity(ip.getPanier()));               
                 fr.reinitListFruit();
                 fruitOfPanier();
+                fr.desactiverButton();
                 //cnxdb.closeConnection();
             }
         });
@@ -262,8 +263,7 @@ public class Controller {
                 fr.reinitListFruit();
                 fruitOfPanier();
                 fr.reinitPoid();
-                fr.desactiverButtonModif();
-                fr.desactiverButtonSupp();
+                fr.desactiverButton();
                 ip.reinitListFruit();
                 fruitOfMain();
                 
@@ -314,8 +314,7 @@ public class Controller {
                 fruitOfPanier();
                 ip.reinitListFruit();
                 fruitOfMain();
-                fr.desactiverButtonSupp();
-                fr.desactiverButtonModif();
+                fr.desactiverButton();
                 //cnxdb.closeConnection();
             }
         });
@@ -338,8 +337,7 @@ public class Controller {
                 ip.afficherCout(String.valueOf(cnxdb.getCout(ip.getPanier())));
                 fr.reinitListFruit();
                 fruitOfPanier();
-                fr.desactiverButtonSupp();
-                fr.desactiverButtonModif();
+                fr.desactiverButton();
                 ip.reinitListFruit();
                 fruitOfMain();
                 fr.reinitNPoid();
@@ -352,8 +350,6 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e){
                 fr.reinitListBoycott();
-                fr.desactiverButtonModif();
-                fr.desactiverButtonSupp();
                 fr.dispose();
             }
         });

@@ -34,22 +34,27 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
         
     }
     
+    //l'action sur le bouton Valider
     public void buttonValiderListener(ActionListener listener){
         this.boutonValiderListener = listener;
     }
     
+    //recuperer le nom à partir du champ
     public String getNom(){
         return jTextFieldNom.getText();
     }
     
+    //recuperer le type à partir du champ
     public String gettype(){
         return jTextFieldType.getText();
     }
-
+    
+    //recuperer la capacité à partir du champ
     public int getCapacite(){
         return Integer.parseInt(jTextFieldCapaciteMax.getText());
     }
     
+    //pour le message qui s'affiche dans le cas d'un panier qui existe deja
     public void retourResultat(String res){
         Timer timer = new Timer(5000, new ActionListener() {
             @Override
@@ -62,6 +67,7 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
         timer.start();
     }
     
+    //reinitialiser les champs
     public void reinit(){
         jTextFieldNom.setText("");
         jTextFieldType.setText("");
@@ -243,6 +249,7 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAbandonnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbandonnerActionPerformed
+        //fermer l'interface
         this.dispose();
     }//GEN-LAST:event_jButtonAbandonnerActionPerformed
 
