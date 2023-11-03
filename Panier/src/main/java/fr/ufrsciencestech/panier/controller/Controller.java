@@ -72,8 +72,6 @@ public class Controller {
         
         
         
-        //pour remplir la liste du fruit proposée
-        //remplirLF();
         //pour remplir la liste des paniers disponibles
         remplirLP();
         
