@@ -18,19 +18,28 @@ import java.util.List;
  * @author HP
  */
 public class ConnexionBDD {
-    private static final String URL = "jdbc:sqlite:bddprojetgl.db";
+
+    private static final String URL = "jdbc:sqlite:../bddprojetgl.db";
     private Connection connection;
-    
+
     //Connexion à la base de donnée
     public ConnexionBDD() {
         try{
             connection = DriverManager.getConnection(URL);
             System.out.println("Connexion à la BDD établie ");
         } catch(SQLException e) {
-            System.err.println("Erreur de connexion à la BDD");
+            System.err.println("Erreur de connexion à la BDD"+e.getMessage());
         }
     }
-    
+    public ConnexionBDD(String url) {
+        try{
+            connection = DriverManager.getConnection(url);
+            System.out.println("Connexion à la BDD établie ");
+        } catch(SQLException e) {
+            System.err.println("Erreur de connexion à la BDD"+e.getMessage());
+        }
+    }
+
     //Fermeture de la connexion à la base de donnée
     public void closeConnection() {
         try {
@@ -141,7 +150,7 @@ public class ConnexionBDD {
             }
             return fruits;
         } catch (SQLException e){
-            System.err.println("Erreur lors de la recuperation des données" + e.getMessage());
+            System.err.println("Erreur lors de la recuperation des données " + e.getMessage());
         }
         
         return new Object[0][0];
@@ -204,7 +213,7 @@ public class ConnexionBDD {
                 panier.add(nom);
             }
         } catch (SQLException e){
-            System.err.println("Erreur lors de la recuperation des données");
+            System.err.println("Erreur lors de la recuperation des données " + e.getMessage());
         }
         
         return panier;
@@ -259,7 +268,7 @@ public class ConnexionBDD {
             }
             return fruits;
         } catch (SQLException e){
-            System.err.println("Erreur lors de la recuperation des données");
+            System.err.println("Erreur lors de la recuperation des données " + e.getMessage());
         }
         
         return new Object[0][0];

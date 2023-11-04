@@ -1,9 +1,8 @@
 package fr.ufrsciencestech.panier.model;
 
-import fr.ufrsciencestech.panier.model.Banane;
-import fr.ufrsciencestech.panier.model.Fraise;
 
-public class FruitFactory {
+
+public interface FruitFactory {
     /*public Fruit creerFruit(String fruit) {
         if(fruit.equalsIgnoreCase("Orange")) {
             return new Orange(2.5, "Italie");
@@ -20,7 +19,7 @@ public class FruitFactory {
         }
     }*/
     
-    public Fruit creerFruit(String fruit){
+    /*public Fruit creerFruit(String fruit){
         if(fruit.equalsIgnoreCase("Banane"))
             return new Banane();
         else if(fruit.equalsIgnoreCase("Fraise"))
@@ -35,5 +34,9 @@ public class FruitFactory {
             return new Pomme();
         else
             throw new IllegalArgumentException("Fruit invalide");
-    }
+    }*/
+    
+    public Fruit creerFruit();
+    
+
 }

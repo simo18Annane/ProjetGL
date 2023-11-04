@@ -10,8 +10,7 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Collections;
-
+import java.util.ArrayList;
 
 
 /**
@@ -20,7 +19,7 @@ import java.util.Collections;
  */
 public class InterfaceFruit extends javax.swing.JFrame {
     
-    private DefaultListModel<String> listBoycott;
+    private DefaultListModel<String> listModel;
     private DefaultListModel<String> listFruit;
     private ActionListener boutonRechercheListener;
     private ActionListener boutonAjoutBoycottListener;
@@ -46,74 +45,56 @@ public class InterfaceFruit extends javax.swing.JFrame {
         jLabelNomPanier.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 17));
         jLabelBoycot.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         
-        ImageIcon IconRecherche = new ImageIcon("src/main/java/image/recherche.png");
+        ImageIcon IconRecherche = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/recherche.png");
         jButtonRecherche.setIcon(IconRecherche);
         
-        ImageIcon IconPlus = new ImageIcon("src/main/java/image/plus.png");
+        ImageIcon IconPlus = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/plus.png");
         jButtonAjouter.setIcon(IconPlus);
         
-        ImageIcon IconSuprBoycot = new ImageIcon("src/main/java/image/corbeil.png");
+        ImageIcon IconSuprBoycot = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/corbeil.png");
         jButtonSuprBoycot.setIcon(IconSuprBoycot);
         
-        ImageIcon IconSupr = new ImageIcon("src/main/java/image/corbeil.png");
+        ImageIcon IconSupr = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/corbeil.png");
         jButtonSupp.setIcon(IconSupr);
         
-        ImageIcon IconModif = new ImageIcon("src/main/java/image/modifier.png");
-        
+        ImageIcon IconModif = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/modifier.png");
+        //jButtonModif.setIcon(IconModif);
         //pour la liste des pays à boycotter
-        listBoycott = new DefaultListModel<>();
-        jListBoycot.setModel(listBoycott);
+        listModel = new DefaultListModel<>();
+        jListBoycot.setModel(listModel);
         listFruit = new DefaultListModel<>();
         jListFruit.setModel(listFruit);
+        
+        desactiverButtonSupp();
+        desactiverButtonModif();
        
     }
     
-    //pour le filtrage des fruits
-    public void buttonRechercherListener(ActionListener listener){
-        this.boutonRechercheListener = listener;
-    }
-    
-    //pour boycotter
-    public void buttonAjoutBoycottListener(ActionListener listener){
-        this.boutonAjoutBoycottListener = listener;
-    }
-    
-    //pour ajouter un fruit au panier
-    public void buttonAjoutFruitListener(ActionListener listener) {
-        this.boutonAjoutFruitListener = listener;
-    }
-    
-    //pour supprimer un fruit d'un panier
-    public void buttonSuppFruitListener(ActionListener listener) {
-        this.boutonSuppFruitListener = listener;
-    }
-    
-    //pour modifier le poid 
-    public void buttonModifPoidListener(ActionListener listener){
-        this.boutonModifPoidListener = listener;
-    }
-    
-    //pour quitter
-    public void buttonQuitterListener(ActionListener listener){
-        this.boutonQuitterListener = listener;
-    }
-    
-    //pour supprimer le filtre
-    public void buttonSuppFiltreListener(ActionListener listener){
-        this.boutonSuppFiltreListener = listener;
-    }
-    
     //desactiver le button supprimer
-    public void desactiverButton(){
+    public void desactiverButtonSupp(){
         jButtonSupp.setEnabled(false);
+    }
+    
+    //desactiver le bouton modifier
+    public void desactiverButtonModif(){
         jButtonModifierPoid.setEnabled(false);
     }
     
-    //remplir la liste de fruit proposée au client 
+    
+    //remplir la liste de fruit proposée au client lors du remplissage du panier
     public void remplirComboBox(String element){
         DefaultComboBoxModel<String> comboBoxModel = (DefaultComboBoxModel<String>) jComboBoxFruit.getModel();
         
         comboBoxModel.addElement(element);
+    }
+
+    public ArrayList<String> getElementFromComboBox(){
+        DefaultComboBoxModel<String> comboBoxModel = (DefaultComboBoxModel<String>) jComboBoxFruit.getModel();
+        ArrayList<String> listeFruit=new ArrayList<String>();
+        for (int i=0;i<comboBoxModel.getSize();i++) {
+            listeFruit.add(comboBoxModel.getElementAt(i));
+        }
+        return listeFruit;
     }
     
     public void ecraserLF(){
@@ -122,45 +103,46 @@ public class InterfaceFruit extends javax.swing.JFrame {
         comboBoxModel.removeAllElements();
     }
     
-    //recuperer à partir du champ de filtre
+    //pour le filtrage des fruits
+    public void buttonRechercherListener(ActionListener listener){
+        this.boutonRechercheListener = listener;
+    }
+    
     public String getFilterText(){
         return jTextField1.getText();
     }
     
-    //reinitialiser le champ de filtre
     public void reinitFiltre(){
         jTextField1.setText("");
     }
     
-    //recuperer le type de filtre
+    //pour supprimer le filtre
+    public void buttonSuppFiltreListener(ActionListener listener){
+        this.boutonSuppFiltreListener = listener;
+    }
+    
     public String getFilter(){
         return jComboBox1.getSelectedItem().toString();
     }
     
-    //recuperer la liste des pays à boycotter
+    //pour boycotter
+    public void buttonAjoutBoycottListener(ActionListener listener){
+        this.boutonAjoutBoycottListener = listener;
+    }
+    
     public DefaultListModel<String> getListeBoycott(){
-        return this.listBoycott;
+        return this.listModel;
     }
     
-    //initialiser la liste des pays à boycotter
-    public void reinitListBoycott(){
-        listBoycott.removeAllElements();
-    }
-    
-    //verifier si le pays a boycotter existe deja dans la liste des pays à boycotter
-    public boolean verifListBoycott(String element){
-        DefaultListModel<String> lst = getListeBoycott();
-        boolean verif = false;
-        for(String pays : Collections.list(lst.elements())){
-            if(pays.equals(element))
-                verif = true;
-        }
-        return verif;
-    }
     
     //recevoir le nom du panier selectionner
     public void receivePanier(String panier){
         jLabelNomPanier.setText(panier);
+    }
+    
+    //pour ajouter un fruit au panier
+    public void buttonAjoutFruitListener(ActionListener listener) {
+        this.boutonAjoutFruitListener = listener;
     }
     
     //recuperer l'id du fruit selectionner pour l'ajouter au panier
@@ -172,12 +154,12 @@ public class InterfaceFruit extends javax.swing.JFrame {
             int number = Integer.parseInt(numberString);
             return number;
         } catch (NumberFormatException ex){
-            System.err.println("erreur lors de la récuperation de l'id d'un fruit");
+            System.out.println("erreur lors de la récuperation de l'id d'un fruit");
         }
         return 0;
     }
     
-    //recuperer l'id du fruit selectionner pour le supprimer
+    //recuperer l'id di fruit selectionner pour le supprimer
     public int getIdFruit(){
         String text = jListFruit.getSelectedValue();
         String[] separer = text.split("-");
@@ -186,12 +168,12 @@ public class InterfaceFruit extends javax.swing.JFrame {
             int number = Integer.parseInt(numberString);
             return number;
         } catch (NumberFormatException ex){
-            System.err.println("erreur lors de la récuperation de l'id d'un fruit");
+            System.out.println("erreur lors de la récuperation de l'id d'un fruit");
         }
         return 0;
     }
     
-    //recuperer le nombre de kilo lors de l'ajout d'un fruit à un panier
+    //recuperer le nombre de kilo
     public double getPoid(){
         if(!Poids.getText().isEmpty())
             return Double.parseDouble(Poids.getText());
@@ -213,9 +195,19 @@ public class InterfaceFruit extends javax.swing.JFrame {
         listFruit.removeAllElements();
     }
     
-    //pour le message retour qui verifie si le panier est plein ou bien si un fruit existe deja dans le panier
+    //pour le message retour qui verifie si le panier est plein
     public void receiveMessageRetour(String msg){
         messageRetour.setText(msg);
+    }
+    
+    //pour supprimer un fruit d'un panier
+    public void buttonSuppFruitListener(ActionListener listener) {
+        this.boutonSuppFruitListener = listener;
+    }
+
+    //initialiser la liste des pays à boycotter
+    public void reinitListBoycott(){
+        listModel.removeAllElements();
     }
     
     public JFrame getMainFrame(){
@@ -234,8 +226,15 @@ public class InterfaceFruit extends javax.swing.JFrame {
         nvPoid.setText("");
     }
     
-
-
+    //pour modifier le poid 
+    public void buttonModifPoidListener(ActionListener listener){
+        this.boutonModifPoidListener = listener;
+    }
+    
+    //pour quitter
+    public void buttonQuitterListener(ActionListener listener){
+        this.boutonQuitterListener = listener;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -341,10 +340,11 @@ public class InterfaceFruit extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLigneRechercheLayout.createSequentialGroup()
                 .addGroup(jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonRecherche, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelLigneRechercheLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonSuppFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonRecherche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelLigneRechercheLayout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(jButtonSuppFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -730,13 +730,10 @@ public class InterfaceFruit extends javax.swing.JFrame {
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
         String texteSaisi = jTextFieldSaisie.getText();  
-        if(!verifListBoycott(texteSaisi)){
-            listBoycott.addElement(texteSaisi); 
-            if(boutonAjoutBoycottListener != null){
-                boutonAjoutBoycottListener.actionPerformed(evt);
-            }
+        listModel.addElement(texteSaisi); 
+        if(boutonAjoutBoycottListener != null){
+            boutonAjoutBoycottListener.actionPerformed(evt);
         }
-        
         jTextFieldSaisie.setText("");
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
@@ -761,6 +758,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
 
     private void jButtonValiderAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderAjoutActionPerformed
         // TODO add your handling code here:
+        jButtonSupp.setEnabled(false);
         if(boutonAjoutFruitListener != null){
             boutonAjoutFruitListener.actionPerformed(evt);
         }
@@ -781,7 +779,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
         // Assurez-vous qu'un élément est sélectionné (l'index n'est pas -1)
         if (selectedIndex != -1) {
             // Supprimez l'élément sélectionné du modèle de liste
-            listBoycott.removeElementAt(selectedIndex);
+            listModel.removeElementAt(selectedIndex);
         }
         if(boutonAjoutBoycottListener != null){
             boutonAjoutBoycottListener.actionPerformed(evt);
