@@ -45,8 +45,6 @@ public class InterfacePanier extends javax.swing.JFrame {
         jLabelNomPanier.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 18));
 
         ImageIcon imageIcon = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/recherche.png");
-        // Affectez l'image au bouton
-        jButton1.setIcon(imageIcon);
         //pour remplir la liste des paniers
         listModel = new DefaultListModel<>();
         jListPanier.setModel(listModel);
@@ -160,9 +158,6 @@ public class InterfacePanier extends javax.swing.JFrame {
         jPanelGauche = new javax.swing.JPanel();
         jLabelListePanier = new javax.swing.JLabel();
         jPanelFiltre = new javax.swing.JPanel();
-        jComboBoxFiltre = new javax.swing.JComboBox<>();
-        jTextFieldRecherche = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListPanier = new javax.swing.JList<>();
@@ -208,14 +203,6 @@ public class InterfacePanier extends javax.swing.JFrame {
 
         jLabelListePanier.setText("Liste de paniers");
 
-        jComboBoxFiltre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nom", "Origine", "Prix total", "Type", "Fruit" }));
-
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jListPanier.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jListPanierValueChanged(evt);
@@ -227,7 +214,7 @@ public class InterfacePanier extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,23 +227,12 @@ public class InterfacePanier extends javax.swing.JFrame {
         jPanelFiltre.setLayout(jPanelFiltreLayout);
         jPanelFiltreLayout.setHorizontalGroup(
             jPanelFiltreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFiltreLayout.createSequentialGroup()
-                .addComponent(jComboBoxFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelFiltreLayout.setVerticalGroup(
             jPanelFiltreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFiltreLayout.createSequentialGroup()
-                .addGroup(jPanelFiltreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldRecherche, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelFiltreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBoxFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(36, 36, 36)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -284,11 +260,8 @@ public class InterfacePanier extends javax.swing.JFrame {
         jPanelGaucheLayout.setHorizontalGroup(
             jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabelListePanier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanelGaucheLayout.createSequentialGroup()
-                .addGroup(jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelFiltre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelSupprimer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 3, Short.MAX_VALUE))
+            .addComponent(jPanelSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanelFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanelGaucheLayout.setVerticalGroup(
             jPanelGaucheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,7 +293,7 @@ public class InterfacePanier extends javax.swing.JFrame {
             .addComponent(jScrollPaneListeFruit)
             .addGroup(jPanelContenuePanierLayout.createSequentialGroup()
                 .addGroup(jPanelContenuePanierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelContenue, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                    .addComponent(jLabelContenue, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
                     .addGroup(jPanelContenuePanierLayout.createSequentialGroup()
                         .addComponent(jLabelType)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -455,10 +428,6 @@ public class InterfacePanier extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuAjouterActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jMenuItemCreerPanierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCreerPanierActionPerformed
         if(boutonCreerPanierListener != null){
             boutonCreerPanierListener.actionPerformed(evt);
@@ -517,11 +486,9 @@ public class InterfacePanier extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonModifier;
     private javax.swing.JButton jButtonSupprimer;
-    private javax.swing.JComboBox<String> jComboBoxFiltre;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabelAfficheCout;
     private javax.swing.JLabel jLabelAfficherType;
@@ -544,7 +511,6 @@ public class InterfacePanier extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelSupprimer;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPaneListeFruit;
-    private javax.swing.JTextField jTextFieldRecherche;
     private javax.swing.JList<String> jlistFruit;
     // End of variables declaration//GEN-END:variables
 }
