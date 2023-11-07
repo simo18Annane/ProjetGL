@@ -45,7 +45,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
         jLabelNomPanier.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 17));
         jLabelBoycot.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         
-        ImageIcon IconRecherche = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/recherche.png");
+        ImageIcon IconRecherche = new ImageIcon("panier/image/recherche.png");
         jButtonRecherche.setIcon(IconRecherche);
         
         ImageIcon IconPlus = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/plus.png");
@@ -340,11 +340,10 @@ public class InterfaceFruit extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLigneRechercheLayout.createSequentialGroup()
                 .addGroup(jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonRecherche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelLigneRechercheLayout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(jButtonSuppFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jButtonRecherche, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelLigneRechercheLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonSuppFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
