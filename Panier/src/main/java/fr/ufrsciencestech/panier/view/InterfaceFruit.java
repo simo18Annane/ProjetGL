@@ -45,7 +45,7 @@ public class InterfaceFruit extends javax.swing.JFrame {
         jLabelNomPanier.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 17));
         jLabelBoycot.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         
-        ImageIcon IconRecherche = new ImageIcon("panier/image/recherche.png");
+        ImageIcon IconRecherche = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/recherche.png");
         jButtonRecherche.setIcon(IconRecherche);
         
         ImageIcon IconPlus = new ImageIcon("Panier/src/main/java/fr/ufrsciencestech/panier/image/plus.png");
@@ -235,6 +235,83 @@ public class InterfaceFruit extends javax.swing.JFrame {
     public void buttonQuitterListener(ActionListener listener){
         this.boutonQuitterListener = listener;
     }
+
+    public ActionListener getBoutonQuitterListener() {
+        return boutonQuitterListener;
+    }
+
+    public ActionListener getBoutonModifPoidListener() {
+        return boutonModifPoidListener;
+    }
+
+    public JTextField getNvPoid() {
+        return nvPoid;
+    }
+
+    public JList<String> getjListBoycot() {
+        return jListBoycot;
+    }
+
+    public ActionListener getBoutonSuppFruitListener() {
+        return boutonSuppFruitListener;
+    }
+
+    public JLabel getMessageRetour() {
+        return messageRetour;
+    }
+
+    public DefaultListModel<String> getListFruit() {
+        return listFruit;
+    }
+
+    public JTextField getPoids() {
+        return Poids;
+    }
+
+    public JList<String> getjListFruit() {
+        return jListFruit;
+    }
+
+    public ActionListener getBoutonAjoutFruitListener() {
+        return boutonAjoutFruitListener;
+    }
+
+    public JLabel getjLabelNomPanier() {
+        return jLabelNomPanier;
+    }
+
+    public ActionListener getBoutonAjoutBoycottListener() {
+        return boutonAjoutBoycottListener;
+    }
+
+    public JButton getjButtonSupp() {
+        return jButtonSupp;
+    }
+
+    public JButton getjButtonModifierPoid() {
+        return jButtonModifierPoid;
+    }
+
+    public JComboBox<String> getjComboBoxFruit() {
+        return jComboBoxFruit;
+    }
+
+    public ActionListener getBoutonRechercheListener() {
+        return boutonRechercheListener;
+    }
+
+    public JTextField getjTextField1() {
+        return jTextField1;
+    }
+
+    public ActionListener getBoutonSuppFiltreListener() {
+        return boutonSuppFiltreListener;
+    }
+
+    public JComboBox<String> getjComboBox1() {
+        return jComboBox1;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -340,10 +417,11 @@ public class InterfaceFruit extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLigneRechercheLayout.createSequentialGroup()
                 .addGroup(jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonRecherche, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelLigneRechercheLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonSuppFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelLigneRechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonRecherche, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelLigneRechercheLayout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(jButtonSuppFiltre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 

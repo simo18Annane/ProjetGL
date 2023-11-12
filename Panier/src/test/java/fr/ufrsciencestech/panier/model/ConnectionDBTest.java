@@ -35,7 +35,7 @@ public class ConnectionDBTest {
     public void testInsertPanier(){
         int rand=(int)(Math.random()*99)+1;
         assertFalse(cnxdb.insertPanier("test","",10,0.0));
-        assertTrue(cnxdb.insertPanier("testa"+rand,"salade fruit",10,5.0));
+        assertTrue(cnxdb.insertPanier("testa"+rand,"salade fruit",10,0.0));
     }
     @Test
     public void testGetPrixFruit(){

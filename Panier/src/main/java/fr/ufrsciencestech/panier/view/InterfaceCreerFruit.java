@@ -75,8 +75,27 @@ public class InterfaceCreerFruit extends javax.swing.JFrame {
         jTextFieldPrix.setText("");
         jTextFieldOrigine.setText("");
     }
-    
 
+
+    public JComboBox<String> getListFruit() {
+        return listFruit;
+    }
+
+    public ActionListener getBoutonValiderListener() {
+        return boutonValiderListener;
+    }
+
+    public JTextField getjTextFieldPrix() {
+        return jTextFieldPrix;
+    }
+
+    public JTextField getjTextFieldOrigine() {
+        return jTextFieldOrigine;
+    }
+
+    public JLabel getResultat() {
+        return resultat;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

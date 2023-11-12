@@ -18,6 +18,11 @@ public class InterfacePanier extends javax.swing.JFrame {
     private DefaultListModel<String> listModel;
     private DefaultListModel<String> listFruit;
     private ActionListener boutonModifListener;
+
+    public JButton getjButtonModifier() {
+        return jButtonModifier;
+    }
+
     private ActionListener boutonCreerFruitListener;
     private ActionListener boutonCreerPanierListener;
     private ListSelectionListener selectedListFruitListener;
@@ -65,6 +70,11 @@ public class InterfacePanier extends javax.swing.JFrame {
     public void remplirListPanier(String element){
         listModel.addElement(element);
     }
+
+    public DefaultListModel<String> getListModel() {
+        return listModel;
+    }
+
     public ArrayList<String> getElementFromListPanier(){
         ArrayList<String> listePanier =new ArrayList<String>();
         for (int i=0;i<listModel.getSize()/2;i++) {
@@ -76,23 +86,38 @@ public class InterfacePanier extends javax.swing.JFrame {
     public void ecraserLP(){
         listModel.removeAllElements();
     }
-    
+
+
     //ouvrir l'interface qui contient les fruits en cliquant sur modifier
     public void buttonModifierListener(ActionListener listener){
         this.boutonModifListener = listener;
     }
-    
+
+    public ActionListener getBoutonModifListener() {
+        return boutonModifListener;
+    }
+
+    public void setBoutonModifListener(ActionListener boutonModifListener) {
+        this.boutonModifListener = boutonModifListener;
+    }
+
     //ouvrir l'interface qui permet de creer un fruit
     public void buttonCreerFruitListener(ActionListener listener){
         this.boutonCreerFruitListener = listener;
     }
-    
+
+    public ActionListener getBoutonCreerPanierListener() {
+        return boutonCreerPanierListener;
+    }
+
+    public ActionListener getBoutonCreerFruitListener() {
+        return boutonCreerFruitListener;
+    }
+
     //ouvrir l'interface qui permet de creer un panier
     public void buttonCreerPanierListener(ActionListener listener){
         this.boutonCreerPanierListener = listener;
     }
-    
-
 
     //pour recuperer le panier selectionner
     public String getPanier(){
@@ -133,7 +158,15 @@ public class InterfacePanier extends javax.swing.JFrame {
     public void buttonSuppPanierListener(ActionListener listener){
         this.boutonSuppPanierListener = listener;
     }
-    
+
+    public JLabel getjLabelAfficherType() {
+        return jLabelAfficherType;
+    }
+
+    public JLabel getjLabelAfficheCout() {
+        return jLabelAfficheCout;
+    }
+
     //afficher le cout d'un panier
     public void afficherCout(String cout){
         jLabelAfficheCout.setText(cout);
@@ -143,7 +176,7 @@ public class InterfacePanier extends javax.swing.JFrame {
         return this;
     }
 
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -411,6 +444,10 @@ public class InterfacePanier extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    public ActionListener getBoutonSuppPanierListener() {
+        return boutonSuppPanierListener;
+    }
+
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
         // TODO add your handling code here:
         if(boutonSuppPanierListener != null){
@@ -440,7 +477,15 @@ public class InterfacePanier extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemCreerFruitActionPerformed
 
-    private void jListPanierValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListPanierValueChanged
+    public JButton getjButtonSupprimer() {
+        return jButtonSupprimer;
+    }
+
+    public JList<String> getjListPanier() {
+        return jListPanier;
+    }
+
+    protected void jListPanierValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListPanierValueChanged
         // TODO add your handling code here:
         jLabelNomPanier.setText(jListPanier.getSelectedValue());
         jButtonModifier.setEnabled(true);

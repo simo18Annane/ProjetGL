@@ -6,7 +6,8 @@ package fr.ufrsciencestech.panier.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.Timer;
+import javax.swing.*;
+
 /**
  *
  * @author betul
@@ -14,6 +15,11 @@ import javax.swing.Timer;
 public class InterfaceCreerPanier extends javax.swing.JFrame {
 
     private ActionListener boutonValiderListener;
+
+    public void setjTextFieldNom(JTextField jTextFieldNom) {
+        this.jTextFieldNom = jTextFieldNom;
+    }
+
     /**
      * Creates new form InterfaceCreerPanier
      */
@@ -49,7 +55,11 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
     public int getCapacite(){
         return Integer.parseInt(jTextFieldCapaciteMax.getText());
     }
-    
+
+    public JLabel getResultat() {
+        return resultat;
+    }
+
     public void retourResultat(String res){
         Timer timer = new Timer(5000, new ActionListener() {
             @Override
@@ -246,12 +256,24 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButtonAbandonnerActionPerformed
 
+    public JButton getjButtonAbandonner() {
+        return jButtonAbandonner;
+    }
+
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
         // TODO add your handling code here:
         if(boutonValiderListener != null){
             boutonValiderListener.actionPerformed(evt);
         }
     }//GEN-LAST:event_jButtonValiderActionPerformed
+
+    public ActionListener getBoutonValiderListener() {
+        return boutonValiderListener;
+    }
+
+    public JButton getjButtonValider() {
+        return jButtonValider;
+    }
 
     /**
      * @param args the command line arguments
@@ -307,5 +329,16 @@ public class InterfaceCreerPanier extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldNom;
     private javax.swing.JTextField jTextFieldType;
     private javax.swing.JLabel resultat;
-    // End of variables declaration//GEN-END:variables
+
+    public JTextField getjTextFieldNom() {
+        return jTextFieldNom;
+    }
+
+    public JTextField getjTextFieldType() {
+        return jTextFieldType;
+    }
+
+    public JTextField getjTextFieldCapaciteMax() {
+        return jTextFieldCapaciteMax;
+    }
 }
