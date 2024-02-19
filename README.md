@@ -1,2 +1,3 @@
-# GLPanierTP5
-Base pour tester les conflits git en java
+- première année en master Informatique parcours Base de Données - Intelligence Artificielle BDIA
+- Génie logiciel et environnement professionnel: les Design Patterns et les méthodes agiles
+- La conception d'une application Java pour la gestion des paniers de fruits en favorisant la création d'interfaces homme-machine IHM.
